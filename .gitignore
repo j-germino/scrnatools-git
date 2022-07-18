@@ -1,0 +1,8 @@
+__pycache__
+.*
+scrnatools.egg-info/
+!/.gitignore
+analysis
+data
+.ipynb_checkpoints
+dist
