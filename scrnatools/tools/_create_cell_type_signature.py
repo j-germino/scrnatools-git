@@ -11,6 +11,7 @@ Created on Mon Jan 10 15:57:46 2022
 from anndata import AnnData
 from typing import Optional
 import pandas as pd
+import numpy as np
 
 # scrnatools package imports
 from .._configs import configs
@@ -60,13 +61,15 @@ def create_cell_type_signature(
         raise ValueError(f"{cell_type_labels} not a valid column in 'adata.obs'")
     if data_loc == "raw":
         signatures = pd.DataFrame(index=adata.raw.var_names)
+        raw_adata = adata.raw.to_adata()
+        raw_adata.obs[cell_type_labels] = adata.obs[cell_type_labels]
     else:
         signatures = pd.DataFrame(index=adata.var_names)
     for cell_type in adata.obs[cell_type_labels].unique():
         if data_loc == "X":
             signatures[cell_type] = adata[adata.obs[cell_type_labels] == cell_type].X.mean(axis=0)
         elif data_loc == "raw":
-            signatures[cell_type] = adata[adata.obs[cell_type_labels] == cell_type].raw.X.todense().mean(axis=0).T
+            signatures[cell_type] = np.array(raw_adata[raw_adata.obs[cell_type_labels] == cell_type].X.todense()).mean(axis=0)
         else:
             if data_loc in adata.layers:
                 signatures[cell_type] = adata[adata.obs[cell_type_labels] == cell_type].layers[data_loc].mean(axis=0)
