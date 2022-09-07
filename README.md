@@ -5,7 +5,7 @@ Helper methods for scRNAseq processing using scanpy + scVI
 
 # To install from github:
 ```
-git clone https://github.com/j-germino/sc-rna-tools-git.git
+git clone https://github.com/ntranoslab/scrnatools-git.git
 cd sc-rna-tools-git
 pip install -e scrnatools # allows live editing of source files
 ```
