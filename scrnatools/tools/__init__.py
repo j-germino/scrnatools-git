@@ -12,3 +12,5 @@ from ._log_density_ratio import log_density_ratio
 from ._cell_type_similarity import cell_type_similarity
 from ._create_cell_type_signature import create_cell_type_signature
 from ._get_immgen_similarity_signatures import get_immgen_similarity_signatures
+from ._read_kallisto_tcc_matrix import read_kallisto_tcc_matrix
+from ._isoform_preprocessing import isoform_preprocessing
