@@ -11,6 +11,7 @@ Created on Mon Jan 10 15:57:46 2022
 from anndata import AnnData
 import scanpy as sc
 from pandas import DataFrame
+import numpy as np
 
 # scrnatools package imports
 from .._configs import configs
@@ -48,4 +49,4 @@ def isoform_preprocessing(
     logger.info(f"Filtered {ncells - adata.shape[0]} cells with no ecs")
     # rename vars to be ecs
     ec = ec.iloc[np.array(adata.var_names, dtype=int)]
-    adata.var_names=ec.loc[:, 1].values
+    adata.var_names = ec.loc[:, 1].values

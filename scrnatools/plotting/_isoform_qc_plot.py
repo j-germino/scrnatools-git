@@ -14,7 +14,7 @@ import scanpy as sc
 import numpy as np
 from anndata import AnnData
 from typing import Optional
-
+from matplotlib.patches import Patch
 
 # scrnatools package imports
 from scrnatools._configs import configs
@@ -45,7 +45,7 @@ def isoform_qc_plot(
     ValueError
         If the batch key provided is not a column in in 'adata.obs'
     """
-    if not batch_key.isin(adata.obs.columns):
+    if batch_key not in adata.obs.columns:
         raise ValueError(f"{batch_key} is not a valid column in 'adata.obs'")
 
     sc.set_figure_params(figsize=(6, 6), dpi=80, dpi_save=300, facecolor="white", frameon=False)

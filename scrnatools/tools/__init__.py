@@ -14,3 +14,6 @@ from ._create_cell_type_signature import create_cell_type_signature
 from ._get_immgen_similarity_signatures import get_immgen_similarity_signatures
 from ._read_kallisto_tcc_matrix import read_kallisto_tcc_matrix
 from ._isoform_preprocessing import isoform_preprocessing
+from ._create_isoform_lookup_tables import create_isoform_lookup_tables
+from ._save_isoform_lookup_tables import save_isoform_lookup_tables
+from ._load_isoform_lookup_tables import load_isoform_lookup_tables

@@ -12,6 +12,7 @@ from anndata import AnnData
 from pandas import DataFrame
 import numpy as np
 import pandas as pd
+from typing import Tuple, Dict
 
 # scrnatools package imports
 from .._configs import configs
@@ -26,20 +27,33 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 @debug(logger, configs)
 def create_isoform_lookup_tables(
         adata: AnnData,
-        t2enst: DataFrame,
+        t2enst_path: DataFrame,
         t2g_path: DataFrame,
-):
+) -> Tuple[Dict[str, str], Dict[str, str], Dict[str, str]]:
     """
     Creates the lookup tables for isoform data transcripts and genes
+
     Parameters
     ----------
     adata
         The AnnData containing kallisto isoform data
-    t2enst
+    t2enst_path
         Path to the transcript to ensembl transcript id mapping dataframe (from kallisto alignment)
     t2g_path
         Path to the transcript to gene mapping dataframe (from the kallisto reference used for alignment)
+
+    Returns
+    ----------
+    ec2tx
+        The equivalence class to transcript dict
+    ec2g
+        The equivalence class to gene dict
+    inv_map
+        The gene to equivalence class dict
     """
+    # Import the transcript list from kallisto
+    t2enst = pd.read_csv(t2enst_path, header=None,)
+    t2enst.columns = ['enst']
 
     # Import the transcript to gene mapping dataframe
     t2g = pd.read_csv(t2g_path, header=None, sep='\t')
@@ -83,18 +97,17 @@ def create_isoform_lookup_tables(
             # are the problem
             errors = [i for i in txs if i not in t2g.index]
             key_errors[ec] = errors
-    adata.var["ec_tx_error"] = ecError
+    adata.var["ec_tx_error"] = ec_error
     # Create an inverse mapping dictionary getting all ecs and their txs for a given gene
     inv_map = {}
-    for (ec, genes) in ec2g.items():
+    for ec, genes in ec2g.items():
         for gene in genes:
             # Get the current dict of ec's for that gene
             inv_map[gene] = inv_map.get(gene, {})
             # Append the current ec
             inv_map[gene][ec] = ec2tx[ec]
     # save the dicts
-    logger.info(f"Number of ec errors: {ec_error.sum()}")
-    adata.uns['g2ec'] = inv_map
-    adata.uns['ec2g'] = ec2g
-    adata.uns['key_errors'] = keyerrors
-    adata.uns['ec2tx'] = ec2tx
+    logger.info(f"Number of ec errors: {len(key_errors)}")
+    adata.uns['key_errors'] = key_errors
+    return ec2tx, ec2g, inv_map
+
