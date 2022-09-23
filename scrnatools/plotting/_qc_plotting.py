@@ -142,6 +142,7 @@ def qc_plotting(
     if not show_legend:
         ax.get_legend().remove()
     ax.set(yscale="log")
+    ax.set(xscale="log")
     if show_thresholds:
         for threshold in counts_thresholds:
             plt.axhline(
