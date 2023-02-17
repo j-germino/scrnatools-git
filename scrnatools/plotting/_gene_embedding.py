@@ -1,5 +1,5 @@
 """
-Creates a TSNE plot of a gene's expression from a layer using scanpy
+Creates a UMAP/TSNE plot of a gene's expression from a layer using scanpy
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -25,7 +25,7 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 
 
 @debug(logger, configs)
-def gene_tsne(
+def gene_embedding(
         adata: AnnData,
         gene_list: List[str],
         layer: str,
@@ -34,11 +34,12 @@ def gene_tsne(
         dpi_save: int = 300,
         min_quantile: float = 0.01,
         max_quantile: float = 0.99,
+        use_rep="X_umap",
         *args,
         **kwargs,
 ):
     """
-    Creates a TSNE plot of a gene's expression from a layer using scanpy
+    Creates a UMAP plot of a gene's expression from a layer using scanpy
     Parameters
     ----------
     adata
@@ -57,10 +58,12 @@ def gene_tsne(
         The quantile of expression for a gene to set the minimum of the colorbar to. Default 0.01
     max_quantile
         The quantile of expression for a gene to set the maximum of the colorbar to. Default 0.99
+    use_rep
+        The embedding coordinates in 'adata.obsm' to use, default is standard UMAP representation from scanpy
     args
-        Other arguments to 'sc.pl.tsne()'
+        Other arguments to 'sc.pl.umap()'
     kwargs
-        Other arguments to 'sc.pl.tsnse()'
+        Other arguments to 'sc.pl.umap()'
 
     Raises
     -------
@@ -79,8 +82,8 @@ def gene_tsne(
     for gene in gene_list:
         if layer != "X":
             if scipy.sparse.issparse(adata.layers[layer]):
-                min = np.quantile(adata[:, gene].layers[layer].todense(), min_quantile)
-                max = np.quantile(adata[:, gene].layers[layer].todense(), max_quantile)
+                min = np.quantile(adata[:, gene].layers[layer].todense().tolist(), min_quantile)
+                max = np.quantile(adata[:, gene].layers[layer].todense().tolist(), max_quantile)
                 vmin.append(min)
                 if max < 1:
                     vmax.append(1)
@@ -97,9 +100,11 @@ def gene_tsne(
             vmin.append(min)
             vmax.append(max)
     # Plot the data
+    adata_copy = adata.copy()
+    adata_copy.obsm["X_umap"] = adata.obsm[use_rep]
     if layer == "X":
-        sc.pl.tsne(
-            adata,
+        sc.pl.umap(
+            adata_copy,
             color=gene_list,
             vmin=vmin,
             vmax=vmax,
@@ -107,8 +112,8 @@ def gene_tsne(
             **kwargs,
         )
     else:
-        sc.pl.tsne(
-            adata,
+        sc.pl.umap(
+            adata_copy,
             color=gene_list,
             layer=layer,
             vmin=vmin,
