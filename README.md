@@ -18,8 +18,7 @@ pip install scrnatools
 # Contents:
 
 ## Plotting methods (rna.pl)
-**gene_umap** - Plots gene expression on a UMAP with quantile thresholds for the colorbar mapping<br/>
-**gene_tsne** - Plots gene expression on a TSNE with quantile thresholds for the colorbar mapping<br/>
+**gene_embedding** - Plots gene expression on a UMAP/TSNE with quantile thresholds for the colorbar mapping<br/>
 **gene_density plot** - Plots the desity of a gene's expression on a UMAP/TSNE<br/>
 **qc_plotting** - general QC plots showing read/cell, num genes/cell, percent mito reads, etc.<br/>
 
