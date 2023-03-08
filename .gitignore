@@ -5,4 +5,5 @@ scrnatools.egg-info/
 analysis
 data
 .ipynb_checkpoints
+build
 dist
