@@ -106,8 +106,6 @@ def gene_heatmap(
     figWidth = (ncols*cell_size/figdpi)/totalWidth
     figHeight = (nrows*cell_size/figdpi)/totalHeight
     
-    fig = plt.figure(figsize=(figWidth, figHeight))
-    
     cg = sns.clustermap(
         expression_matrix, figsize = (figWidth, figHeight),
         *args, **kwargs
@@ -143,12 +141,11 @@ def gene_heatmap(
     cg.ax_heatmap.tick_params(axis='x', labelrotation=90)
 
     sns.set_theme(context="paper", style="white")
-    fig.tight_layout()
 
     if save_path is not None:
         if "/" not in save_path:
             save_path = f"./{save_path}"
         check_path(save_path.rsplit("/", 1)[0])
         logger.info(f"Saving figure to {save_path}")
-        plt.savefig(save_path, dpi=dpi, facecolor="white",)
+        plt.savefig(save_path, dpi=dpi, facecolor="white", bbox_inches="tight")
     plt.show()
