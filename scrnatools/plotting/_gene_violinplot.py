@@ -53,9 +53,9 @@ def gene_violinplot(
     x_values
         Values from x key group to display on violinplot. Default displays all values in x key.
     hue_key
-        The categorical grouping to color the grouped violin plots by. Default None.
+        The categorical grouping to color the grouped violin plots by. Values will appear in legend. Default None.
     hue_values
-        Values from hue_key to display on violinplot. Values will show up in legend. Default displays all values in hue key.
+        Values from hue_key to display on violinplot. Default displays all values in hue key.
     ncols
         Number of columns to display the violinplots.
     nrows
@@ -140,11 +140,11 @@ def gene_violinplot(
     
     #check inputted x values and hue values are in subsetted data
     for i in x_values:
-        if i not in expression_matrix[x_key].unique().categories:
+        if i not in list(expression_matrix[x_key].unique()):
             raise ValueError(f"{i} is not in adata's x_key {x_key}.\nPossible {x_key}s: {list(adata.obs[x_key].unique())}")
     if hue_key != None:
         for i in hue_values:
-            if i not in expression_matrix[hue_key].unique().categories:
+            if i not in list(expression_matrix[hue_key].unique()):
                 raise ValueError(f"{i} is not in adata's hue_key {hue_key}.\nPossible {hue_key}s: {list(adata.obs[hue_key].unique())}")
 
     #generate violin plots

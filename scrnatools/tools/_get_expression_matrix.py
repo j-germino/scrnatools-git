@@ -64,7 +64,7 @@ def get_expression_matrix(
         if issparse(anndata.layers[gene_data]):
             matrix = DataFrame(anndata.layers[gene_data].todense(), index=anndata.obs.index, columns=anndata.var_names)
         else:
-            matrix = DataFrame(anndata.layers[gene_data])
+            matrix = DataFrame(anndata.layers[gene_data], index=anndata.obs.index, columns=anndata.var_names)
     else:
         raise ValueError(f"{gene_data} is not 'X', 'raw', or a valid layer name in '{anndata.layers}'")
     return matrix

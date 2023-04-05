@@ -53,7 +53,7 @@ def gene_heatmap(
         Values from obs key group to display on heatmap. Default displays all values in obs key.
     cbar_args
         List of integers to position color bar on heatmap. [x position, y position, width, height].
-        Default adjusts to be on right middle of headmap.
+        Default automatically adjusts to right middle of heatmap.
     reverse_axis
         A boolean to reverse x and y axes. Default False.
     cell_size

@@ -21,6 +21,8 @@ pip install scrnatools
 **gene_embedding** - Plots gene expression on a UMAP/TSNE with quantile thresholds for the colorbar mapping<br/>
 **gene_density plot** - Plots the desity of a gene's expression on a UMAP/TSNE<br/>
 **qc_plotting** - general QC plots showing read/cell, num genes/cell, percent mito reads, etc.<br/>
+**gene_heatmap** - Plots gene expression of a given list of gene values based on an annotated categorical variable (cell type, genotype, etc.) on a heatmap<br/>
+**gene_violinplot** - Plots a number of violin plots where each violinplot displays a gene's expression from a given list of gene values based on an annotated categorical variable which can be colored by a different annotated categorical variable<br/>
 
 ## QC methods (rna.qc)
 **scrublet** - Uses scrublet to filter doublets from data based on a doublet score threshold<br/>
