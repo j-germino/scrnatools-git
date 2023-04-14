@@ -68,7 +68,7 @@ def cluster_de(
     """
     if cluster_key not in adata.obs.columns:
         raise ValueError(f"{cluster_key} is not a valis column in 'adata.obs'")
-    de_df = model.differential_expression(groupby=cluster_key, )
+    de_df = model.differential_expression(adata, groupby=cluster_key, )
     cats = adata.obs[cluster_key].cat.categories
     markers = {}
     for i, c in enumerate(cats):
