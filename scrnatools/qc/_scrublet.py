@@ -73,4 +73,4 @@ def scrublet(
     num_doublets = adata.obs.scrublet_called_doublet.sum()
     pct_doublets = round(num_doublets / len(adata) * 100, 3)
     logger.info(f"{pct_doublets}% of cells classified as doublets ({num_doublets} cells)")
-    return adata[~adata.obs.scrublet_called_doublet].copy()
+    return adata
