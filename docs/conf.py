@@ -2,12 +2,12 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'scrnatools'
+copyright = '2023'
+author = 'Joe Germino'
 
-release = '0.1'
-version = '0.1.0'
+release = '0.4'
+version = '0.4.0'
 
 # -- General configuration
 
