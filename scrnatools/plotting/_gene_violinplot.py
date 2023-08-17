@@ -151,6 +151,7 @@ def gene_violinplot(
                 raise ValueError(f"{i} is not in adata's hue_key {hue_key}.\nPossible {hue_key}s: {list(adata.obs[hue_key].unique())}")
 
     #generate violin plots
+    sns.set_theme(context="paper", style="white", )
     for plt_num, gene in enumerate(gene_list):
         plt.subplot(nrows, ncols, plt_num + 1)
         ax = sns.violinplot(
@@ -173,7 +174,8 @@ def gene_violinplot(
         ax.grid(False)
         ax.set(xlabel=None)
         ax.set_title(f"{gene}")
-    sns.set_theme(context="paper", style="white")
+        ax.tick_params(bottom=True, left=True)
+
     fig.tight_layout()
     if save_path is not None:
         if "/" not in save_path:

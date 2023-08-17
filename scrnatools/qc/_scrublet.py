@@ -9,6 +9,7 @@ Created on Mon Jan 10 15:57:46 2022
 # external package imports
 from anndata import AnnData
 from typing import Optional
+import matplotlib.pyplot as plt
 import scrublet as scr
 import pandas as pd
 
@@ -53,6 +54,7 @@ def scrublet(
         adata.obs["scrublet_batch_key"] = "None"
         batch_key = "scrublet_batch_key"
     # Calculate doublet scores for each batch indepenently
+    plt.rcParams["axes.grid"] = False
     for key in adata.obs[batch_key].unique():
         subset_data = adata[adata.obs[batch_key] == key]
         counts_matrix = subset_data.layers[raw_counts_layer]

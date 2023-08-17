@@ -15,7 +15,7 @@ setuptools.setup(
         "scanpy",
         "scrublet",
         "scvi-tools",
-        "matplotlib",
+        "matplotlib<3.6",
         "pandas<2.0.0",
         "numpy",
         "seaborn",
