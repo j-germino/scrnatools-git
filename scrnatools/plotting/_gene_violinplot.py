@@ -35,6 +35,7 @@ def gene_violinplot(
     nrows: Optional[int] = None,
     save_path: str = None,
     dpi: int = 300,
+    fig_size: Tuple[float] = (0.5, 2.5),
     *args, **kwargs
 ):
     """
@@ -64,6 +65,8 @@ def gene_violinplot(
         The path to save the figure. Default None.
     dpi
         The resolution of the saved image. Default 300.
+    fig_size
+        The scaling factors for the column and row size in the figure. Defaults to (0.5, 2.5)
 
     Raises
     -------
@@ -125,7 +128,7 @@ def gene_violinplot(
     if ncols * nrows < len(gene_list):
             raise ValueError("Number of rows and columns must fit number of genes in gene list (nrows * ncols >= length of gene list).")
     
-    fig=plt.figure(figsize=(ncols*len(x_values)*max(2, len(hue_values)) * 1, nrows*5))    
+    fig=plt.figure(figsize=(ncols*len(x_values)*max(2, len(hue_values))*fig_size[0], nrows*fig_size[1]))    
     
     #subset data on x values and hue values -> expression matrix
     if hue_key is None:

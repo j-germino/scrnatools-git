@@ -30,7 +30,7 @@ def gene_heatmap(
     obs_values: List[str] = ['All'],
     cbar_args: List[int] = None,
     reverse_axis: bool = False,
-    cell_size: int = 50,
+    cell_size: int = 30,
     save_path: str = None,
     dpi: int = 300,
     *args, **kwargs
@@ -57,7 +57,7 @@ def gene_heatmap(
     reverse_axis
         A boolean to reverse x and y axes. Default False.
     cell_size
-        Integer specifying the size of each cell in the heatmap. Default 50.
+        Integer specifying the size of each cell in the heatmap. Default 30.
     save_path
         The path to save the figure. Default None.
     dpi

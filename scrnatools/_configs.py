@@ -10,7 +10,7 @@ Created on Mon Jan 10 15:57:46 2022
 import logging
 import os
 
-# <name TBD> package imports
+# scrnatools package imports
 from ._utils import type_check
 
 
@@ -20,13 +20,11 @@ class Config:
     def __init__(
             self,
             verbosity="warning",
-            debug_memory=False,
             debug_timing=False,
             log_path="sc-rna-tools_logs",
             save_logs=False,
     ):
         self._verbosity = verbosity
-        self._debug_memory = debug_memory
         self._debug_timing = debug_timing
         self._log_path = log_path
         self._save_logs = save_logs
@@ -47,16 +45,6 @@ class Config:
         for logger in self._loggers:
             self._set_log_level(logger, verbosity)
         self._verbosity = verbosity
-
-    @property
-    def debug_memory(self) -> bool:
-        """Determines whether line by line memory usage is logged for debugging functions"""
-        return self._debug_memory
-
-    @debug_memory.setter
-    def debug_memory(self, debug_memory: bool):
-        type_check(debug_memory, "debug_memory", bool)
-        self._debug_memory = debug_memory
 
     @property
     def debug_timing(self) -> bool:
@@ -113,7 +101,6 @@ class Config:
     def __str__(self) -> str:
         return f"ScoreConfig(" \
                f"verbosity: {self.verbosity}, " \
-               f"debug_memory: {self.debug_memory}, " \
                f"debug_timing: {self.debug_timing}, " \
                f"log_path: {self.log_path}, " \
                f"save_logs: {self.save_logs})"

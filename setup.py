@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="scrnatools",
-    version="0.3.6",
+    version="0.4",
     author="Joe Germino",
     author_email="joe.germino@ucsf.edu",
     description="Tools for single cell RNA sequencing pipelines",
@@ -16,13 +16,15 @@ setuptools.setup(
         "scrublet",
         "scvi-tools",
         "matplotlib",
-        "pandas",
+        "pandas<2.0.0",
         "numpy",
         "seaborn",
-        "memory-profiler",
+        "scikit-misc",
         "leidenalg",
         "datetime",
         "anndata",
         "scipy",
-    ]
+        "numba<0.57"
+    ],
+    python_requires='>=3, <3.11',
 )
