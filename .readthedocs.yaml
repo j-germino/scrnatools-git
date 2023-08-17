@@ -6,12 +6,10 @@ build:
     python: "3.10"
 
 sphinx:
-  fail_on_warning: true # do not change or you will be fired
+  fail_on_warning: true
   configuration: docs/conf.py
 
 python:
   install:
   - method: pip
     path: .
-    extra_requirements:
-    - pandas
