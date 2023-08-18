@@ -16,7 +16,6 @@ import pandas as pd
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
@@ -24,7 +23,6 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 # -------------------------------------------------------function----------------------------------------------------- #
 
 
-@debug(logger, configs)
 def cell_type_similarity(
         adata: AnnData,
         signatures: pd.DataFrame,

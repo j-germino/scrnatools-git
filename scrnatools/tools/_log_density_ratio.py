@@ -1,6 +1,5 @@
 """
-Calculates a differential density ratio of cells grouped by condition/control
-From scrnatools package
+Calculates a differential density ratio of cells grouped by condition and control
 
 Created on Mon Jan 10 15:57:46 2022
 
@@ -17,49 +16,40 @@ from typing import Optional, Tuple
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
 
-@debug(logger, configs)
+
 def log_density_ratio(
         adata: AnnData,
         group_by: str,
         groups: Tuple[str, str],
         latent_rep: str = "X_umap",
         key_added: str = "log_density_ratio",
-        est_settings: Optional = None,
-):
-    """
-    Calculates a differential density ratio of cells grouped by condition/control
-    Parameters
-    ----------
-    adata
-        The AnnData containing labeled cell data
-    group_by
-        The column in 'adata.obs' containing condition and control labels
-    groups
-        The labels in 'adata.obs[group_by]' that distinguish condition and control cells, i.e. ["WT", "KO"]
-    latent_rep
-        The latent representation to calculate differential density across
-    key_added
-        The column in 'adata.obs' that will the density ratios will be added to
-    est_settings
+        est_settings = None,
+) -> AnnData:
+    """Calculates a differential density ratio of cells grouped by condition and control
 
-    Returns
-    -------
-        The original adata modified to contain the differential density ratios in a new column in 'adata.obs'
+    Args:
+        adata (AnnData): The AnnData containing labeled cell data.
+        group_by (str):  The column in 'adata.obs' containing condition and control labels.
+        groups (Tuple[str, str]): The labels in 'adata.obs[group_by]' that distinguish condition and control cells, i.e. ["WT", "KO"].
+        latent_rep (str, optional): The latent representation to calculate differential density across. Defaults to "X_umap".
+        key_added (str, optional): The column in 'adata.obs' that will the density ratios will be added to. Defaults to "log_density_ratio".
+        est_settings (optional): The estimator settings used for kernel density calculation. Defaults to None.
 
-    Raises
-    -------
-    ValueError
-        If 'group_by' is not a valid column name in 'adata.obs'
-    ValueError
-        If 'groups' are not valid labels in 'adata.obs[group_by]'
-    """
+    Raises:
+        ValueError: If 'group_by' is not a valid column name in 'adata.obs'.
+        ValueError: If 'groups' are not valid labels in 'adata.obs[group_by]'.
+
+    Returns:
+        AnnData:  The original adata modified to contain the differential density ratios in a new column in 'adata.obs'.
+
+    """      
+
     if group_by not in adata.obs:
         raise ValueError(f"{group_by} is not a valid column key in 'adata.obs'")
     for group in groups:

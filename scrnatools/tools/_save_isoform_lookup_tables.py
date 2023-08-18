@@ -13,7 +13,6 @@ from typing import Dict
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug, check_path
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
@@ -21,7 +20,6 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 # -------------------------------------------------------function----------------------------------------------------- #
 
 
-@debug(logger, configs)
 def save_isoform_lookup_tables(
         path: str,
         ec2tx: Dict[str, str],

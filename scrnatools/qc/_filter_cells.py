@@ -13,22 +13,19 @@ from typing import Tuple
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
-
-@debug(logger, configs)
 def filter_cells(
         adata: AnnData,
         genes_thresholds: Tuple[int, int],
         counts_thresholds: Tuple[int, int],
         mt_threshold: int = 10,
 ) -> AnnData:
-    """
-    Filters cells based on gene number, total counts, and % mitochondrial
+    """Filters cells based on gene number, total counts, and % mitochondrial
+
     Parameters
     ----------
     adata
@@ -41,9 +38,11 @@ def filter_cells(
         'count_thresholds[1]' being the upper bound (both exclusive).
     mt_threshold
         The maximum percent mitochondrial reads per cell. Default 10%.
+
     Returns
     -------
     An AnnData object with cells that don't pass the thresholds filtered out
+
     """
     logger.info(f"Number of cells before QC filtering: {len(adata.obs)}")
     filtered_adata = adata[adata.obs.pct_counts_mt < mt_threshold].copy()

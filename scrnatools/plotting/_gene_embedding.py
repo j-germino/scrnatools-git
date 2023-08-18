@@ -17,14 +17,12 @@ from anndata import AnnData
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug, check_path
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
 
-@debug(logger, configs)
 def gene_embedding(
         adata: AnnData,
         gene_list: List[str],
@@ -38,8 +36,8 @@ def gene_embedding(
         *args,
         **kwargs,
 ):
-    """
-    Creates a UMAP plot of a gene's expression from a layer using scanpy
+    """Creates a UMAP/TSNE plot of a gene's expression from a layer using scanpy
+    
     Parameters
     ----------
     adata
@@ -69,6 +67,7 @@ def gene_embedding(
     -------
     ValueError
         If 'layer' is not a valid key in 'adata.layers'
+
     """
     # Setup figure
     sc.set_figure_params(figsize=figsize, dpi=dpi, dpi_save=dpi_save, facecolor="white", frameon=False)

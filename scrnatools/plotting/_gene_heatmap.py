@@ -15,28 +15,28 @@ import scrnatools
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug, check_path
+from .._utils import check_path
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
-@debug(logger, configs)
 def gene_heatmap(
-    adata: AnnData,
-    gene_list: List[str],
-    obs_key: str,
-    layer: str = "X",
-    obs_values: List[str] = ['All'],
-    cbar_args: List[int] = None,
-    reverse_axis: bool = False,
-    cell_size: int = 30,
-    save_path: str = None,
-    dpi: int = 300,
-    *args, **kwargs
+        adata: AnnData,
+        gene_list: List[str],
+        obs_key: str,
+        layer: str = "X",
+        obs_values: List[str] = ['All'],
+        cbar_args: List[int] = None,
+        reverse_axis: bool = False,
+        cell_size: int = 30,
+        save_path: str = None,
+        dpi: int = 300,
+        *args, **kwargs
 ):
     """
     Plots a heatmap of expression of genes
+    
     Parameters
     ----------
     adata

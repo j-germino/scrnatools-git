@@ -16,7 +16,6 @@ from typing import Tuple, Dict
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug, check_path
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
@@ -24,7 +23,6 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 # -------------------------------------------------------function----------------------------------------------------- #
 
 
-@debug(logger, configs)
 def create_isoform_lookup_tables(
         adata: AnnData,
         t2enst_path: DataFrame,

@@ -18,14 +18,11 @@ from matplotlib.patches import Patch
 
 # scrnatools package imports
 from scrnatools._configs import configs
-from scrnatools._utils import debug
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
-
-@debug(logger, configs)
 def isoform_qc_plot(
         adata: AnnData,
         batch_key: Optional[str] = None,

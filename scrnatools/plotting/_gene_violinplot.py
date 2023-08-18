@@ -16,13 +16,12 @@ import scrnatools
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug, check_path
+from .._utils import check_path
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
-@debug(logger, configs)
 def gene_violinplot(
     adata: AnnData,
     gene_list: List[str],
@@ -40,6 +39,7 @@ def gene_violinplot(
 ):
     """
     Plots violinplot subplots of expression of genes
+    
     Parameters
     ----------
     adata

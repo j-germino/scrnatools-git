@@ -14,14 +14,12 @@ from anndata import AnnData
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
 
-@debug(logger, configs)
 def get_expression_matrix(
         anndata: AnnData,
         gene_data: Optional[str] = None,

@@ -23,6 +23,7 @@ extensions = [
     "sphinx.ext.napoleon",  # to read Google-style or Numpy-style docstrings
     "sphinx.ext.viewcode",  # to allow vieing the source code in the web page
     "autodocsumm",  # to generate tables of functions, attributes, methods, etc.
+    'recommonmark',
 ]
 
 templates_path = ['_templates']

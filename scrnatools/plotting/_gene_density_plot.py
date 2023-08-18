@@ -19,21 +19,19 @@ import numpy as np
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug, check_path
+from .._utils import check_path
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
-
-@debug(logger, configs)
 def gene_density_plot(
         adata: AnnData,
         gene_list: List[str],
         data_loc: str = "X",
         thresh: int = 1,
         latent_rep: str = "X_umap",
-        est_settings=None,
+        est_settings = None,
         cmap: str = "magma",
         s: Optional[int] = None,
         ncols: int = 3,
@@ -42,40 +40,25 @@ def gene_density_plot(
         save_path: Optional[str] = None,
         dpi: int = 300,
 ):
-    """
-    Plots the density of expression of genes on an embedding
-    Parameters
-    ----------
-    adata
-        The AnnData containing the gene expression and cell data
-    gene_list
-        A list of genes to plot
-    data_loc
-        The location of the expression data to use for density calculations, can be a layer in 'adata.layers' or 'X'
-        to use the data stored in adata.X. Default 'X'
-    thresh
-    latent_rep
-        The 2D representation to plot gene expression for each cell on. Default 'X_umap'
-    est_settings
-    cmap
-        The pyplot colormap to use for plotting. Default 'magma'
-    s
-        The size of data points to plot. Default is to automatically calculate (None)
-    ncols
-        The number of columns in the figure
-    figsize
-        A tuple of the dimensions of each subplot for a single gene. Default (3,3)
-    title
-        The title of the figure. Default None
-    save_path
-        The path to save the figure. Default None.
-    dpi
-        The resolution of the saved image. Default 300
+    """Plots the density of expression of genes on an embedding
 
-    Raises
-    -------
-    ValueError
-        If the 'data_loc' provided is not 'X' or a valid layer in 'adata.layers'
+    Args:
+        adata (AnnData): The AnnData containing the gene expression and cell data
+        gene_list (List[str]): A list of genes to plot
+        data_loc (str, optional): The location of the expression data to use for density calculations, can be a layer in 'adata.layers' or 'X' to use the data stored in adata.X. Defaults to "X".
+        thresh (int, optional): Kernel density threshold. Defaults to 1.
+        latent_rep (str, optional): The 2D representation to plot gene expression for each cell on. Defaults to "X_umap".
+        est_settings (optional): Custom settings for the kernel density estimator. Defaults to None.
+        cmap (str, optional): The pyplot colormap to use for plotting. Defaults to "magma".
+        s (Optional[int], optional): The size of data points to plot. Default is to automatically calculate (None).
+        ncols (int, optional): The number of columns in the figure. Defaults to 3.
+        figsize (Tuple[int], optional):  A tuple of the dimensions of each subplot for a single gene. Defaults to (3, 3).
+        title (Optional[str], optional): The title of the figure. Defaults to None.
+        save_path (Optional[str], optional): The path to save the figure. Defaults to None.
+        dpi (int, optional): The resolution of the saved image. Defaults to 300.
+
+    Raises:
+        ValueError: If the 'data_loc' provided is not 'X' or a valid layer in 'adata.layers'
     """
 
     # set up figure

@@ -15,22 +15,18 @@ import pandas as pd
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
-
-@debug(logger, configs)
 def scrublet(
         adata: AnnData,
         raw_counts_layer: str,
         doublet_threshold: float = 0.2,
         batch_key: Optional[str] = None,
 ) -> AnnData:
-    """
-    Filters out doublets using scrublet
+    """Filters out doublets using scrublet
 
     Parameters
     ----------
@@ -47,6 +43,7 @@ def scrublet(
     Returns
     -------
     The AnnData provided with doublets filtered out inplace based on doublet_threshold
+
     """
     # Setup
     scrublet_predictions = pd.DataFrame()

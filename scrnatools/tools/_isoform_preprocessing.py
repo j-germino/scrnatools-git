@@ -15,7 +15,6 @@ import numpy as np
 
 # scrnatools package imports
 from .._configs import configs
-from .._utils import debug, check_path
 
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
@@ -23,7 +22,6 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 # -------------------------------------------------------function----------------------------------------------------- #
 
 
-@debug(logger, configs)
 def isoform_preprocessing(
         adata: AnnData,
         ec: DataFrame,
