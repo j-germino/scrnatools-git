@@ -18,6 +18,7 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
+
 def filter_cells(
         adata: AnnData,
         genes_thresholds: Tuple[int, int],
@@ -35,12 +36,21 @@ def filter_cells(
     Returns:
         AnnData:  The dataset filtered on cells that don't pass the thresholds.
     """
-    
+
     logger.info(f"Number of cells before QC filtering: {len(adata.obs)}")
     filtered_adata = adata[adata.obs.pct_counts_mt < mt_threshold].copy()
-    filtered_adata = filtered_adata[filtered_adata.obs.total_counts < counts_thresholds[1]]
-    filtered_adata = filtered_adata[filtered_adata.obs.total_counts > counts_thresholds[0]]
-    filtered_adata = filtered_adata[filtered_adata.obs.n_genes_by_counts < genes_thresholds[1]]
-    filtered_adata = filtered_adata[filtered_adata.obs.n_genes_by_counts > genes_thresholds[0]].copy()
-    logger.info(f"Number of cells after QC filtering: {len(filtered_adata.obs)}")
+    filtered_adata = filtered_adata[
+        filtered_adata.obs.total_counts < counts_thresholds[1]
+    ]
+    filtered_adata = filtered_adata[
+        filtered_adata.obs.total_counts > counts_thresholds[0]
+    ]
+    filtered_adata = filtered_adata[
+        filtered_adata.obs.n_genes_by_counts < genes_thresholds[1]
+    ]
+    filtered_adata = filtered_adata[
+        filtered_adata.obs.n_genes_by_counts > genes_thresholds[0]
+    ].copy()
+    logger.info(
+        f"Number of cells after QC filtering: {len(filtered_adata.obs)}")
     return filtered_adata

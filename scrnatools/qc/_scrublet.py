@@ -8,7 +8,6 @@ Created on Mon Jan 10 15:57:46 2022
 """
 # external package imports
 from anndata import AnnData
-from typing import Optional
 import matplotlib.pyplot as plt
 import scrublet as scr
 import pandas as pd
@@ -19,6 +18,7 @@ from .._configs import configs
 logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
+
 
 def scrublet(
         adata: AnnData,
@@ -39,7 +39,7 @@ def scrublet(
     Returns:
         AnnData: The dataset provided with doublets filtered/labeled based on doublet_threshold
     """
-    
+
     # Setup
     scrublet_predictions = pd.DataFrame()
     if batch_key is None:
@@ -59,14 +59,20 @@ def scrublet(
         )
         scrub.call_doublets(threshold=doublet_threshold)
         scrub.plot_histogram()
-        scrublet_prediction = pd.DataFrame({"scrublet_score": doublet_scores}, index=subset_data.obs.index)
-        scrublet_predictions = pd.concat([scrublet_predictions, scrublet_prediction])
+        scrublet_prediction = pd.DataFrame(
+            {"scrublet_score": doublet_scores},
+            index=subset_data.obs.index
+        )
+        scrublet_predictions = pd.concat(
+            [scrublet_predictions, scrublet_prediction]
+        )
     # Add scrublet scores to adata.obs and filter out cells with a score > doublet_threshold
     adata.obs["scrublet_score"] = scrublet_predictions.scrublet_score
     adata.obs["scrublet_called_doublet"] = adata.obs.scrublet_score > doublet_threshold
     num_doublets = adata.obs.scrublet_called_doublet.sum()
     pct_doublets = round(num_doublets / len(adata) * 100, 3)
-    logger.info(f"{pct_doublets}% of cells classified as doublets ({num_doublets} cells)")
+    logger.info(
+        f"{pct_doublets}% of cells classified as doublets ({num_doublets} cells)")
     if subset:
         adata = adata[~adata.obs.scrublet_called_doublet]
     return adata

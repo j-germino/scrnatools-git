@@ -1,5 +1,5 @@
 """
-Plots the density of expression of genes on an embedding
+Plots the density of expression of genes on an embedding.
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -8,7 +8,7 @@ Created on Mon Jan 10 15:57:46 2022
 """
 # external package imports
 from anndata import AnnData
-from typing import List, Optional, Tuple
+from typing import List, Tuple
 import seaborn as sns
 import matplotlib.pyplot as plt
 from math import ceil
@@ -25,36 +25,37 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 
 # -------------------------------------------------------function----------------------------------------------------- #
 
+
 def gene_density_plot(
         adata: AnnData,
         gene_list: List[str],
         data_loc: str = "X",
         thresh: int = 1,
         latent_rep: str = "X_umap",
-        est_settings = None,
+        est_settings=None,
         cmap: str = "magma",
-        s: Optional[int] = None,
+        s: int = None,
         ncols: int = 3,
         figsize: Tuple[int] = (3, 3),
-        title: Optional[str] = None,
-        save_path: Optional[str] = None,
+        title: str = None,
+        save_path: str = None,
         dpi: int = 300,
 ):
-    """Plots the density of expression of genes on an embedding
+    """Plots the density of expression of genes on an embedding.
 
     Args:
-        adata (AnnData): The AnnData containing the gene expression and cell data
-        gene_list (List[str]): A list of genes to plot
+        adata (AnnData): The dataset containing the gene expression and cell data.
+        gene_list (List[str]): A list of genes to plot.
         data_loc (str, optional): The location of the expression data to use for density calculations, can be a layer in 'adata.layers' or 'X' to use the data stored in adata.X. Defaults to "X".
         thresh (int, optional): Kernel density threshold. Defaults to 1.
         latent_rep (str, optional): The 2D representation to plot gene expression for each cell on. Defaults to "X_umap".
         est_settings (optional): Custom settings for the kernel density estimator. Defaults to None.
         cmap (str, optional): The pyplot colormap to use for plotting. Defaults to "magma".
-        s (Optional[int], optional): The size of data points to plot. Default is to automatically calculate (None).
+        s (int, optional): The size of data points to plot. Defaults to None.
         ncols (int, optional): The number of columns in the figure. Defaults to 3.
-        figsize (Tuple[int], optional):  A tuple of the dimensions of each subplot for a single gene. Defaults to (3, 3).
-        title (Optional[str], optional): The title of the figure. Defaults to None.
-        save_path (Optional[str], optional): The path to save the figure. Defaults to None.
+        figsize (Tuple[int], optional): The dimensions of each subplot for a single gene. Defaults to (3, 3).
+        title (str, optional): The title of the figure. Defaults to None.
+        save_path (str, optional): The path to save the figure. Defaults to None.
         dpi (int, optional): The resolution of the saved image. Defaults to 300.
 
     Raises:
@@ -86,7 +87,8 @@ def gene_density_plot(
                     else:
                         x = temp_data.layers[data_loc]
                 else:
-                    raise ValueError(f"{data_loc} not 'X' or a valid layer in 'adata.layers'")
+                    raise ValueError(
+                        f"{data_loc} not 'X' or a valid layer in 'adata.layers'")
             scaler = StandardScaler()
             x_scaled = scaler.fit_transform(x).reshape(-1)
             density = KDEMultivariateConditional(
@@ -97,7 +99,8 @@ def gene_density_plot(
                 bw="normal_reference",
                 defaults=est_settings
             )
-            z1 = density.cdf(thresh + np.zeros_like(x_scaled), adata.obsm[latent_rep])
+            z1 = density.cdf(thresh + np.zeros_like(x_scaled),
+                             adata.obsm[latent_rep])
 
             cm = plt.get_cmap(cmap)
             s = int(80000 / adata.shape[0]) if s is None else s
@@ -114,7 +117,8 @@ def gene_density_plot(
                 linewidth=0
             )
             ax.set_aspect("equal")  # Make sure the aspect ratio is square
-            ax.set(xticklabels=[], yticklabels=[], xlabel=None, ylabel=None, title=gene)  # Get rid of x and y labels
+            ax.set(xticklabels=[], yticklabels=[], xlabel=None,
+                   ylabel=None, title=gene)  # Get rid of x and y labels
 
             norm = plt.Normalize(1 - z1[idx].min(), 1 - z1[idx].max())
             sm = plt.cm.ScalarMappable(cmap=cm, norm=norm)

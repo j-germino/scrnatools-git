@@ -21,7 +21,6 @@ setuptools.setup(
         "seaborn",
         "scikit-misc",
         "leidenalg",
-        "datetime",
         "anndata",
         "scipy",
         "numba<0.57",
