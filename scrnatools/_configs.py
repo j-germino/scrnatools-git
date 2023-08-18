@@ -20,12 +20,10 @@ class Config:
     def __init__(
             self,
             verbosity="warning",
-            debug_timing=False,
             log_path="sc-rna-tools_logs",
             save_logs=False,
     ):
         self._verbosity = verbosity
-        self._debug_timing = debug_timing
         self._log_path = log_path
         self._save_logs = save_logs
         self._loggers = []  # list of loggers created by modules
@@ -45,16 +43,6 @@ class Config:
         for logger in self._loggers:
             self._set_log_level(logger, verbosity)
         self._verbosity = verbosity
-
-    @property
-    def debug_timing(self) -> bool:
-        """Determines whether function timing is logged for debugging"""
-        return self._debug_timing
-
-    @debug_timing.setter
-    def debug_timing(self, debug_timing: bool):
-        type_check(debug_timing, "debug_timing", bool)
-        self._debug_timing = debug_timing
 
     @property
     def log_path(self) -> str:
@@ -101,7 +89,6 @@ class Config:
     def __str__(self) -> str:
         return f"ScoreConfig(" \
                f"verbosity: {self.verbosity}, " \
-               f"debug_timing: {self.debug_timing}, " \
                f"log_path: {self.log_path}, " \
                f"save_logs: {self.save_logs})"
 

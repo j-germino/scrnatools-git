@@ -25,7 +25,8 @@ setuptools.setup(
         "anndata",
         "scipy",
         "numba<0.57",
-        "numpy<1.24"
+        "numpy<1.24",
+        "starlette<0.28.0"
     ],
     python_requires='>=3, <3.11',
 )
