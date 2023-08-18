@@ -6,7 +6,7 @@
 Welcome to scrnatools' documentation!
 =====================================
 
-**scrnatools** is a Python library providing tools for single cell RNA sequencing pipelines 
+**scrnatools** is a Python library providing tools for single cell RNA sequencing pipelines. All code can be found on GitHub at https://github.com/j-germino/scrnatools-git/
 
 Check out the :doc:`usage` section for further information, including
 how to :ref:`install` the project.
