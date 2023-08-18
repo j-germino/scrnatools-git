@@ -1,3 +1,4 @@
+-e .
 sphinx
 sphinx-rtd-theme
 autodocsumm
