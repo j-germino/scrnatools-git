@@ -1,5 +1,5 @@
 """
-Filters out doublets using scrublet
+Filters out doublets using scrublet.
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -24,27 +24,22 @@ def scrublet(
         adata: AnnData,
         raw_counts_layer: str,
         doublet_threshold: float = 0.2,
-        batch_key: Optional[str] = None,
+        batch_key: str = None,
+        subset: bool = False,
 ) -> AnnData:
-    """Filters out doublets using scrublet
+    """Filters out doublets using scrublet.
 
-    Parameters
-    ----------
-    adata
-        The AnnData to process
-    doublet_threshold
-        The doublet score threshold to call doublets/singlets on. Default 0.2
-    batch_key
-        A column in 'adata.obs' annotating different batches of data. If 'None' treats all cells as coming from the same
-        batch. Default None
-    raw_counts_layer
-        A key in 'adata.layers' pointing to the raw counts data
+    Args:
+        adata (AnnData): The dataset to process
+        raw_counts_layer (str):  A key in 'adata.layers' pointing to the raw counts data.
+        doublet_threshold (float, optional): The doublet score threshold to call doublets/singlets on. Defaults to 0.2.
+        batch_key (str, optional): A column in 'adata.obs' annotating different batches of data. If 'None' treats all cells as coming from the same batch. Defaults to None.
+        subset (bool, optional): Whether to filter the doublets in place or just annotate them.
 
-    Returns
-    -------
-    The AnnData provided with doublets filtered out inplace based on doublet_threshold
-
+    Returns:
+        AnnData: The dataset provided with doublets filtered/labeled based on doublet_threshold
     """
+    
     # Setup
     scrublet_predictions = pd.DataFrame()
     if batch_key is None:
@@ -72,4 +67,6 @@ def scrublet(
     num_doublets = adata.obs.scrublet_called_doublet.sum()
     pct_doublets = round(num_doublets / len(adata) * 100, 3)
     logger.info(f"{pct_doublets}% of cells classified as doublets ({num_doublets} cells)")
+    if subset:
+        adata = adata[~adata.obs.scrublet_called_doublet]
     return adata

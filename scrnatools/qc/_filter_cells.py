@@ -1,5 +1,5 @@
 """
-Filters cells based on gene number, total counts, and % mitochondrial
+Filters cells based on gene number, total counts, and % mitochondrial reads.
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -24,26 +24,18 @@ def filter_cells(
         counts_thresholds: Tuple[int, int],
         mt_threshold: int = 10,
 ) -> AnnData:
-    """Filters cells based on gene number, total counts, and % mitochondrial
+    """Filters cells based on gene number, total counts, and % mitochondrial reads.
 
-    Parameters
-    ----------
-    adata
-        The AnnData with the data to filter
-    genes_thresholds
-        A Tuple of thresholds for the number of genes per cell with 'gene_thresholds[0]' being the lower bound and
-        'gene_thresholds[1]' being the upper bound (both exclusive).
-    counts_thresholds
-        A Tuple of thresholds for the number of total counts cell with 'count_thresholds[0]' being the lower bound and
-        'count_thresholds[1]' being the upper bound (both exclusive).
-    mt_threshold
-        The maximum percent mitochondrial reads per cell. Default 10%.
+    Args:
+        adata (AnnData): The AnnData with the data to filter.
+        genes_thresholds (Tuple[int, int]): A Tuple of thresholds for the number of genes per cell with 'gene_thresholds[0]' being the lower bound and 'gene_thresholds[1]' being the upper bound (both exclusive).
+        counts_thresholds (Tuple[int, int]): A Tuple of thresholds for the number of total counts per cell with 'count_thresholds[0]' being the lower bound and 'count_thresholds[1]' being the upper bound (both exclusive).
+        mt_threshold (int, optional): The maximum percent mitochondrial reads per cell. Defaults to 10.
 
-    Returns
-    -------
-    An AnnData object with cells that don't pass the thresholds filtered out
-
+    Returns:
+        AnnData:  The dataset filtered on cells that don't pass the thresholds.
     """
+    
     logger.info(f"Number of cells before QC filtering: {len(adata.obs)}")
     filtered_adata = adata[adata.obs.pct_counts_mt < mt_threshold].copy()
     filtered_adata = filtered_adata[filtered_adata.obs.total_counts < counts_thresholds[1]]
