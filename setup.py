@@ -24,7 +24,8 @@ setuptools.setup(
         "datetime",
         "anndata",
         "scipy",
-        "numba<0.57"
+        "numba<0.57",
+        "numpy<1.24"
     ],
     python_requires='>=3, <3.11',
 )
