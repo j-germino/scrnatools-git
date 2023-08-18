@@ -1,5 +1,5 @@
 """
-Performs basic preprocessing of kallisto isoform data
+Performs basic preprocessing of kallisto isoform data.
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -26,16 +26,13 @@ def isoform_preprocessing(
         adata: AnnData,
         ec: DataFrame,
 ):
-    """
-    Performs basic preprocessing of kallisto isoform data
+    """Performs basic preprocessing of kallisto isoform data.
 
-    Parameters
-    ----------
-    adata
-        The AnnData containing kallisto isoform data
-    ec
-        The equivalence class matrix to rename vars with
+    Args:
+        adata (AnnData): The AnnData containing kallisto isoform data.
+        ec (DataFrame): The equivalence class matrix to rename vars with.
     """
+
     adata.obs_names_make_unique()
     # Filter out equivalence classes with no counts
     ngenes = adata.shape[1]

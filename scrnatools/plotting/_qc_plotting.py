@@ -1,5 +1,5 @@
 """
-Creates common preprocessing QC plots for an AnnData object
+Creates common preprocessing QC plots for an AnnData object.
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -10,9 +10,8 @@ Created on Mon Jan 10 15:57:46 2022
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import numpy as np
 from anndata import AnnData
-from typing import Optional, Tuple
+from typing import Tuple
 
 # scrnatools package imports
 from .._configs import configs
@@ -25,48 +24,34 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 
 def qc_plotting(
         adata: AnnData,
-        counts_thresholds: Tuple[int, int] = [1000, 30000],
-        genes_thresholds: Tuple[int, int] = [100, 5000],
+        counts_thresholds: Tuple[int, int] = (1000, 30000),
+        genes_thresholds: Tuple[int, int] = (100, 5000),
         mt_threshold: int = 10,
         show_thresholds: bool = True,
-        batch_key: Optional[str] = None,
+        batch_key: str = None,
         show_legend: bool = True,
         figsize: Tuple[int, int] = (9, 3),
         dpi: int = 300,
-        save_path: Optional[str] = None,
+        save_path: str = None,
 ):
-    """
-    Creates common preprocessing QC plots for an AnnData object
-    
-    Parameters
-    ----------
-    adata
-        The AnnData containing data to plot
-    counts_thresholds
-        The lower and upper thresholds to be used on total counts when filtering cells. Default (1000, 30000)
-    genes_thresholds
-        The lower and upper thresholds to be used on number of genes when filtering cells . Default (100, 5000)
-    mt_threshold
-        The threshold to be used on % mito reads when filtering cells. Default 10
-    show_thresholds
-        Whether to show the thresholds as dashed lines on each plot. Default True
-    batch_key
-        A column name in 'adata.obs' that annotates different batches of data for separate plotting. If 'None' treats
-        all cells as coming from the same batch. Default None
-    show_legend
-        Whether to show the 'batch_key" labels as a legend. Default True
-    figsize
-        The size of the figure. Default (9, 3)
-    dpi
-        The resolution of the figure to save. Default 300
-    save_path
-        The path to save the figure to (/path/to/dir/filename). Default None
+    """Creates common preprocessing QC plots for an AnnData object.
 
-    Raises
-    -------
-    ValueError
-        If batch_key is not a valid key in 'adata.obs.columns'
+    Args:
+        adata (AnnData): The dataset containing data to plot
+        counts_thresholds (Tuple[int, int], optional): The lower and upper thresholds to be used on total counts when filtering cells. Defaults to (1000, 30000).
+        genes_thresholds (Tuple[int, int], optional): The lower and upper thresholds to be used on number of genes when filtering genes. Defaults to (100, 5000).
+        mt_threshold (int, optional): The threshold to be used on % mito reads when filtering cells. Defaults to 10.
+        show_thresholds (bool, optional): Whether to show the thresholds as dashed lines on each plot. Defaults to True.
+        batch_key (str, optional):  A column name in 'adata.obs' that annotates different batches of data for separate plotting. If 'None' treats all cells as coming from the same batch. Defaults to None.
+        show_legend (bool, optional):  Whether to show the 'batch_key' labels as a legend. Defaults to True.
+        figsize (Tuple[int, int], optional): The size of the figure. Defaults to (9, 3).
+        dpi (int, optional): The resolution of the figure to save. Defaults to 300.
+        save_path (str, optional): The path to save the figure to (/path/to/dir/filename). Defaults to None.
+
+    Raises:
+        ValueError: If batch_key is not a valid key in 'adata.obs.columns'
     """
+
     # Setup plots
     sns.set_style("ticks")
     sns.set_context("paper")
@@ -77,7 +62,9 @@ def qc_plotting(
         show_legend = False
     else:
         if batch_key not in adata.obs.columns:
-            raise ValueError(f"{batch_key} is not a valid column in 'adata.obs'")
+            raise ValueError(
+                f"{batch_key} is not a valid column in 'adata.obs'"
+            )
 
     # Plot 1: Histogram of % mito counts
     plt.subplot(1, 3, 1)
@@ -130,7 +117,8 @@ def qc_plotting(
     cell_data = pd.DataFrame()
     for category in adata.obs[batch_key].unique():
         category_data = adata[adata.obs[batch_key] == category].obs.copy()
-        category_data["rank"] = category_data.total_counts.rank(method="first", ascending=False,)
+        category_data["rank"] = category_data.total_counts.rank(
+            method="first", ascending=False,)
         cell_data = pd.concat([cell_data, category_data])
     cell_data = cell_data.sort_values(by="rank")
     ax = sns.lineplot(

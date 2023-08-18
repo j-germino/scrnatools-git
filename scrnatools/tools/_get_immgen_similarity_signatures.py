@@ -1,5 +1,5 @@
 """
-Creates a csv with the immgen cell populations signature data
+Creates a csv with the immgen cell populations signature data.
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -9,7 +9,6 @@ Created on Mon Jan 10 15:57:46 2022
 
 # external imports
 import pandas as pd
-from typing import Optional
 import subprocess
 import os
 from shutil import which
@@ -27,22 +26,16 @@ logger = configs.create_logger(__name__.split('_', 1)[1])
 def get_immgen_similarity_signatures(
         save_path: str = "datasets"
 ) -> pd.DataFrame:
-    """
-    Creates a csv with the immgen cell populations signature data
+    """Creates a csv with the immgen cell populations signature data.
 
-    Parameters
-    ----------
-    save_path
-        The path to save the immgen data and signature file to
+    Args:
+        save_path (str, optional): The path to save the immgen data and signature file to. Defaults to "datasets".
 
-    Returns
-    -------
-        A DataFrame containing the immgen cell type expression signatures, with cell types as columns and genes as rows
+    Raises:
+        OSError: if wget is not installed on the system
 
-    Raises
-    -------
-    OSError
-        if wget is not installed on the system
+    Returns:
+        pd.DataFrame: A DataFrame containing the immgen cell type expression signatures, with cell types as columns and genes as rows
     """
 
     if save_path[-1] == "/":
@@ -57,12 +50,23 @@ def get_immgen_similarity_signatures(
                         "https://gist.github.com/vasilisNt/5e23eeefc188e1e772f428c74ef43277/raw/67f83d282b0b2180a8eeff74edf079d8826b12ba/immgen.tar.gz"],
                        stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL,)
-        subprocess.run(["tar", "-xzf", f"{save_path}/immgen.tar.gz", "-C", f"{save_path}/"])
+        subprocess.run(
+            ["tar", "-xzf", f"{save_path}/immgen.tar.gz", "-C", f"{save_path}/"]
+        )
         subprocess.run(["rm", "-rf", f"{save_path}/immgen.tar.gz"])
 
     # Import immgen data
-    immgen = pd.read_csv(f"{save_path}/immgen/Immgen_expression.txt", sep='\t', index_col=0)
-    probes = pd.read_csv(f"{save_path}/immgen/Immgen_probes.txt", sep='\t', index_col=0, header=None)
+    immgen = pd.read_csv(
+        f"{save_path}/immgen/Immgen_expression.txt",
+        sep='\t',
+        index_col=0
+    )
+    probes = pd.read_csv(
+        f"{save_path}/immgen/Immgen_probes.txt",
+        sep='\t',
+        index_col=0,
+        header=None
+    )
     g2n = pd.read_csv(f"{save_path}/immgen/mart_export.txt", sep='\t', )
 
     # create DataFrame with signatures

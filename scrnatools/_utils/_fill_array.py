@@ -1,5 +1,5 @@
 """
-Fills the default value for parameter that don't set values for all plots (keys)
+Fills the default value for parameter that don't set values for all plots (keys).
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -13,22 +13,17 @@ from typing import Any, List
 
 
 def fill_array(variable: Any, default: Any, final_size: int) -> List[Any]:
-    """
-    Fills the default value for parameter that don't set values for all plots (keys)
+    """Fills the default value for parameter that don't set values for all plots (keys).
 
-    Parameters
-    ----------
-    variable
-        The parameter to fill values for
-    default
-        The default value for the argument on a single plot
-    final_size
-        The number of keys in the figure
+    Args:
+        variable (Any): The parameter to fill values for.
+        default (Any): The default value for the argument on a single plot.
+        final_size (int): The number of keys in the figure.
 
-    Returns
-    -------
-    A list of length 'final_size' with the default values for the parameter filling to the end of the list
+    Returns:
+        List[Any]: A list of length 'final_size' with the default values for the parameter filling to the end of the list.
     """
+
     # ensure the parameter is a list
     if not isinstance(variable, list):
         variable = [variable]

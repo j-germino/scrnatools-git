@@ -30,6 +30,7 @@ class Config:
 
     @property
     def verbosity(self) -> str:
+        """The logging level, allowed are: 'debug', 'info', 'warning', 'error', 'critical'"""
         return self._verbosity
 
     @verbosity.setter

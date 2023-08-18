@@ -1,5 +1,5 @@
 """
-Saves the lookup tables for an isoform AnnData object
+Saves the lookup tables for an isoform AnnData object.
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -26,21 +26,15 @@ def save_isoform_lookup_tables(
         ec2g: Dict[str, str],
         inv_map: Dict[str, str],
 ):
-    """
-    Saves the lookup tables for an isoform AnnData object
+    """Saves the lookup tables for an isoform AnnData object.
 
-    Parameters
-    ----------
-    path
-        The path and file name to save the lookup dicts to. (_ec2tx.json, _ec2g.json, and _inv_map.json all appended to
-        this file name)
-    ec2tx
-        The equivalence class to transcript dict to save
-    ec2g
-        The equivalence class to gene dict to save
-    inv_map
-        The gene to equivalence class dict to save
+    Args:
+        path (str): The path and file name to save the lookup dicts to. (_ec2tx.json, _ec2g.json, and _inv_map.json all appended to this file name).
+        ec2tx (Dict[str, str]): The equivalence class to transcript dict to save.
+        ec2g (Dict[str, str]): The equivalence class to gene dict to save.
+        inv_map (Dict[str, str]): The gene to equivalence class dict to save.
     """
+
     with open(f"{path}_ec2tx.json", "w") as f:
         json_file = json.dumps(ec2tx)
         f.write(json_file)

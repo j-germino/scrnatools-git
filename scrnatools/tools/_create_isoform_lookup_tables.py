@@ -1,5 +1,5 @@
 """
-Creates the lookup tables for isoform data transcripts and genes
+Creates the lookup tables for isoform data transcripts and genes.
 From scrnatools package
 
 Created on Mon Jan 10 15:57:46 2022
@@ -28,27 +28,17 @@ def create_isoform_lookup_tables(
         t2enst_path: DataFrame,
         t2g_path: DataFrame,
 ) -> Tuple[Dict[str, str], Dict[str, str], Dict[str, str]]:
-    """
-    Creates the lookup tables for isoform data transcripts and genes
+    """Creates the lookup tables for isoform data transcripts and genes.
 
-    Parameters
-    ----------
-    adata
-        The AnnData containing kallisto isoform data
-    t2enst_path
-        Path to the transcript to ensembl transcript id mapping dataframe (from kallisto alignment)
-    t2g_path
-        Path to the transcript to gene mapping dataframe (from the kallisto reference used for alignment)
+    Args:
+        adata (AnnData): The AnnData containing kallisto isoform data.
+        t2enst_path (DataFrame): Path to the transcript to ensembl transcript id mapping dataframe (from kallisto alignment).
+        t2g_path (DataFrame): Path to the transcript to gene mapping dataframe (from the kallisto reference used for alignment).
 
-    Returns
-    ----------
-    ec2tx
-        The equivalence class to transcript dict
-    ec2g
-        The equivalence class to gene dict
-    inv_map
-        The gene to equivalence class dict
+    Returns:
+        Tuple[Dict[str, str], Dict[str, str], Dict[str, str]]: The equivalence class to transcript dict, the equivalence class to gene dict, and the gene to equivalence class dict.
     """
+
     # Import the transcript list from kallisto
     t2enst = pd.read_csv(t2enst_path, header=None,)
     t2enst.columns = ['enst']
@@ -67,7 +57,8 @@ def create_isoform_lookup_tables(
     # Save ec list to adata
     adata.var['ecs'] = ecs
     # Set adata var_names to be new ec index
-    adata.var_names = np.array(np.arange(adata.shape[1]), dtype=str) # var names are set names
+    # var names are set names
+    adata.var_names = np.array(np.arange(adata.shape[1]), dtype=str)
     # Create dictionary mapping tx indices to tx ids for each ec
     ec2tx = {}
     for (ec, txs) in ecdict.items():
@@ -108,4 +99,3 @@ def create_isoform_lookup_tables(
     logger.info(f"Number of ec errors: {len(key_errors)}")
     adata.uns['key_errors'] = key_errors
     return ec2tx, ec2g, inv_map
-
