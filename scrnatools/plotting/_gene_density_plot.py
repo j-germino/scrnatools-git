@@ -99,8 +99,10 @@ def gene_density_plot(
                 bw="normal_reference",
                 defaults=est_settings
             )
-            z1 = density.cdf(thresh + np.zeros_like(x_scaled),
-                             adata.obsm[latent_rep])
+            z1 = density.cdf(
+                thresh + np.zeros_like(x_scaled),
+                adata.obsm[latent_rep]
+            )
 
             cm = plt.get_cmap(cmap)
             s = int(80000 / adata.shape[0]) if s is None else s
