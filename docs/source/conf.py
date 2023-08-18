@@ -9,7 +9,7 @@
 project = 'scrnatools'
 copyright = '2023, Joe Germino'
 author = 'Joe Germino'
-release = '0.4'
+release = '1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
