@@ -15,29 +15,10 @@ pip install -e scrnatools # allows live editing of source files
 pip install scrnatools
 ```
 
-# Contents:
+# Usage:
 
-## Plotting methods (rna.pl)
-**gene_embedding** - Plots gene expression on a UMAP/TSNE with quantile thresholds for the colorbar mapping<br/>
-**gene_density plot** - Plots the desity of a gene's expression on a UMAP/TSNE<br/>
-**qc_plotting** - general QC plots showing read/cell, num genes/cell, percent mito reads, etc.<br/>
-**gene_heatmap** - Plots gene expression of a given list of gene values based on an annotated categorical variable (cell type, genotype, etc.) on a heatmap<br/>
-**gene_violinplot** - Plots a number of violin plots where each violinplot displays a gene's expression from a given list of gene values based on an annotated categorical variable which can be colored by a different annotated categorical variable<br/>
+scrnatools provides helper plotting and analysis functions built on top of the scanpy and scVI packages to perform common tasks in scRNA-seq analysis pipelines. Extensive description of general best practices and detailed default pipeline examples can be found in the scanpy and scvi-tools documentation. For an example walkthrough of a typical scRNA-seq pipeline and the added functionality provided by scrnatools see the jupyter notebooks provided at https://github.com/j-germino/scrnatools-git/tree/main/examples. These can be uploaded to Google drive and run within a Google colab environemnt, using a GPU session.
 
-## QC methods (rna.qc)
-**scrublet** - Uses scrublet to filter doublets from data based on a doublet score threshold<br/>
-**filter_cells** - filter cells from data based on total counts, num genes, and percent mito reads thresholds<br/>
+# API
 
-## Tools (rna.tl)
-**cell_type_similarity** - Calculates cosine similarity per cell to samples in a reference dataset <br/>
-**create_cell_type_signature** - Creates pseudobulk cell type signatures from single cell data <br/>
-**get_immgen_similarity_signatures** - Downloads and loads immgen cell type signatures (REQUIRES WGET) <br/>
-**cluster_de** - Uses scVI's differential expression method to identify marker genes for each cluster based on bayes
-factor, mean lfc, and non zero expression proportion thresholds<br/>
-**get_expression_matrix** - Gets a cell x gene matrix with expression values from the .X, .raw attributes or a layer of
-an AnnData object<br/>
-**log_density_ratio** - Calculates the relative log density of condition vs control samples in a dataset<br/>
-<br/>
-Detailed examples of each method and a sample analysis pipeline to be run in google colab is contained in
-examples/scrnatools_example.ipynb. <br/><br/>
-For a complete explanation of the scRNAseq pipelines used with these methods refer to the scanpy and scvi-tools documentation
+API documentation is available at: https://scrnatools-git.readthedocs.io/en/latest/
