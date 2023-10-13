@@ -56,7 +56,6 @@ def gene_violinplot(
 
     Raises:
         ValueError: If a gene in 'gene_list' provided is not in provided AnnData layer.
-        ValueError: If the 'x_values' provided less than 2.
         ValueError: If the 'hue_values' is provided but hue_key is not provided.
         ValueError: If the 'hue_values' provided less than 2 if hue_key is also provided.
         ValueError: If ncols * nrows is less than length of gene list provided.
@@ -68,10 +67,6 @@ def gene_violinplot(
     invalid_genes = [i for i in gene_list if i not in adata.var_names]
     if len(invalid_genes) > 0:
         raise ValueError(f"Genes not found in data: {invalid_genes}")
-    if len(x_values) < 2 and x_values != ['All']:
-        raise ValueError(
-            f"Please choose more than one x value. Or use '[All]' to see all {x_key}s"
-        )
     if hue_key is None:
         if hue_values != ['All']:
             raise ValueError(f"Please enter a hue_key.")
@@ -158,7 +153,7 @@ def gene_violinplot(
             x=x_key,
             y=gene,
             hue=hue_key,
-            scale='width',
+            density_norm='width',
             width=0.9,
             order=x_values,
             hue_order=hue_values,

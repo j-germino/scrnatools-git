@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="scrnatools",
-    version="1.0",
+    version="1.11",
     author="Joe Germino",
     author_email="joe.germino@ucsf.edu",
     description="Tools for single cell RNA sequencing pipelines",
